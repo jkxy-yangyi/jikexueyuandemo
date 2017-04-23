@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>简单计算器</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script language="javascript">  
+	  var result="";
+	  var outresult="";
+      var lastkey="";
+      var re1=/^[\*|\/].+/;
+      var re2=/.+[\*|\/]$/;
+      var re3=/(\+|-|\*|\/)/;
+      function calculator(){
+		  if(event.srcElement.innerText == "="){
+			  
+			  return;
+		  }else if(event.srcElement.innerText == "c"){
+			  result="";
+              display.innerText="0";
+              return;
+		  }else if(result.match(re1)){
+			  display.innerText="NAN(不能以符号开头)";
+              result="";
+              return;
+		  }else if(lastkey.match(re3)&&event.srcElement.innerText.match(re3)){
+              return;
+          }else if(lastkey=="="&&event.srcElement.innerText.match(re3)){
+              result=outresult;
+          }
+		  
+		  result+=event.srcElement.innerText;/*获取单元格的内容*/
+		  lastkey=event.srcElement.innerText;
+		  display.innerText=result;
+	  }
+	  
+	  function resultscalcaulte(){
+		  if (result.match(re1)||result.match(re2)){
+          display.innerText="NAN(不能以符号结尾)";
+          results="";
+          return;
+      }
+		  outresult=eval(result);/*运算*/
+          display.innerText=outresult;
+		  if(outresult==Infinity){
+			  display.innerText="NAN(除数不能为0)";
+			  return;
+		  }
+		  lastkey="=";
+          results="";
+	  }
+</script>
+<style type="text/css">
+    .numberkey{
+        cursor: pointer;
+        width: 40px;
+        height: 30px;
+        border: solid 1px #FFFFFF;
+        background: #CCC;
+        color:#000;
+        text-align: center;
+        font-weight: bold;
+        font-family: 黑体;
+    }
+    #equality{
+       cursor: pointer;
+       width: 40px; 
+       height: 100%;
+       background: #CCC;
+       border: solid 1px #FFFFFF;
+       color: #ffffff;
+       text-align: center;
+       font-weight: bold;
+       font-family: 黑体; 
+    }
+</style>
+</head>
+<body>
+<table id="calculator" onclick="calculator()" border="1">
+	<tr>
+    	<td id="display" colspan="5" height="25"></td>
+    </tr>
+    <tr>
+    	<td class="numberkey">1</td>
+        <td class="numberkey">2</td>
+        <td class="numberkey">3</td>
+        <td class="numberkey">+</td>
+        <td rowspan="4" id="equality" onclick="resultscalcaulte()">=</td> 
+    </tr>
+    <tr>
+    	<td class="numberkey">4</td>
+        <td class="numberkey">5</td>
+        <td class="numberkey">6</td>
+        <td class="numberkey">-</td>
+        
+    </tr>
+    <tr>
+    	<td class="numberkey">7</td>
+        <td class="numberkey">8</td>
+        <td class="numberkey">9</td>
+        <td class="numberkey">*</td>
+    </tr>
+    <tr>
+    	<td class="numberkey">c</td>
+        <td class="numberkey">0</td>
+        <td class="numberkey">.</td>
+        <td class="numberkey">/</td>
+    </tr>
+</table>
+</body>
+</html>
